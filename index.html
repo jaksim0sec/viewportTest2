@@ -48,7 +48,7 @@
 <body>
   <div>100dvh 기본 테스트</div>
   <input type="text" placeholder="여기 클릭해서 키보드 테스트" />
-  <button id="jsToggle">JS 대응 시작</button>
+  <button id="jsToggle">J2S 대응 시작</button>
 
 <script>
   let jsActive = false;
@@ -58,10 +58,19 @@
     if (!jsActive) {
       jsActive = true;
       button.textContent = 'JS 대응 활성화됨';
+
       function updateHeight() {
-        document.body.style.height = window.innerHeight + 'px';
+        if (window.visualViewport) {
+          document.body.style.height = window.visualViewport.height + 'px';
+        } else {
+          document.body.style.height = window.innerHeight + 'px';
+        }
       }
+
       window.addEventListener('resize', updateHeight);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', updateHeight);
+      }
       updateHeight();
     }
   });
