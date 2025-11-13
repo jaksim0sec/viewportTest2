@@ -74,6 +74,19 @@
       updateHeight();
     }
   });
+  (() => {
+const updateHeight = () => {
+const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+if (document.body.style.height !== `${h}px`) document.body.style.height = `${h}px`;
+};
+
+
+updateHeight();
+let raf;
+const onResize = () => { if (!raf) raf = requestAnimationFrame(() => { updateHeight(); raf = null; }); };
+window.addEventListener('resize', onResize);
+window.visualViewport?.addEventListener('resize', onResize);
+})();
 </script>
 </body>
 </html>
